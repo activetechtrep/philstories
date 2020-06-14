@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Home from './pages/Home';
+import Auth from './pages/Auth';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -23,15 +24,24 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route path="/home" component={Home} exact={true} />
-        <Route exact path="/" render={() => <Redirect to="/home" />} />
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
-);
+const App: React.FC = () => {
+    
+    const [authed, setAuthed] = useState(false);
+
+    console.log(authed);
+
+    return (
+        <IonApp>
+            <IonReactRouter>
+                <IonRouterOutlet>
+                    <Route path="/authorize" component={Auth} exact={true} />
+                    <Route exact path="/" render={() => <Redirect to="/authorize" />} />
+                    {/* <Route path="/home" component={Home} exact={true} /> */}
+                    {/* <Route exact path="/" render={ () => authed ? <Redirect to="/home" /> : <Redirect to="/authorize" /> } /> */}
+                </IonRouterOutlet>
+            </IonReactRouter>
+        </IonApp>
+    );
+}
 
 export default App;
